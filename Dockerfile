@@ -25,7 +25,7 @@ ENV pip_packages "ansible molecule flake8 testinfra ansible-lint"
 LABEL org.label-schema.name = "ansible-test"
 
 # Description Label
-LABEL org.label-schema.description = "Docker container image for Ansible Playbook and Role Testing."
+LABEL org.label-schema.description = "Centos based Docker container image for Ansible Playbook and Role Testing."
 
 # RUL Label
 LABEL org.label-schema.url="https://github.com/kube-cloud/docker-ansible-test"
