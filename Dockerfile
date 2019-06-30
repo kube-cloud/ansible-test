@@ -48,9 +48,6 @@ RUN	apt-get update && \
 	# Install Pip 2
 	apt-get install -y python-pip && \
 	
-	# Install Pip 3
-	apt-get install -y python-pip3 && \
-	
 	# Install wget
 	apt-get install -y  wget && \
 	
