@@ -1,0 +1,17 @@
+---
+services: docker
+
+before_install:
+  - sudo apt-get update
+  - sudo apt-get -y -o Dpkg::Options::="--force-confnew" install docker-ce
+
+script:
+  
+  # Test building Dockerfile.
+  - docker build -t docker-ansible-test .
+
+  # Test running the container.
+  - docker run --name test-docker-ansible-container -d --rm --privileged -v /sys/fs/cgroup:/sys/fs/cgroup:ro docker-ansible-test
+
+  # Verify Ansible is available in the container.
+  - docker exec --tty test-docker-ansible-container env TERM=xterm ansible --version
