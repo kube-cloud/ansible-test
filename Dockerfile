@@ -7,7 +7,7 @@
 #
 
 # Pull base image.
-FROM centos:7
+FROM ubuntu:18.04
 
 # Maintainer
 LABEL maintainer="Jean-Jacques ETUNÈ NGI<jetune@kube-cloud.com>"
@@ -19,22 +19,22 @@ ARG BUILD_DATE
 ARG VCS_REF
 
 # Pip package to be installed
-ENV pip_packages "ansible"
+ENV pip_packages "ansible pyopenssl"
 
 # Name Label
 LABEL org.label-schema.name = "ansible-test"
 
 # Description Label
-LABEL org.label-schema.description = "Docker container image for Ansible Playbook and Role Testing."
+LABEL org.label-schema.description = "Ubuntu based Docker container image for Ansible Playbook and Role Testing."
 
 # RUL Label
-LABEL org.label-schema.url="https://github.com/kube-cloud/docker-ansible-test"
+LABEL org.label-schema.url="https://github.com/kube-cloud/docker-ansible-test/tree/ubuntu18"
 
 # RUL Label
 LABEL org.label-schema.build-date=$BUILD_DATE
 
 # Version control system URL Label
-LABEL org.label-schema.vcs-url="https://github.com/rossf7/label-schema-automated-build.git"
+LABEL org.label-schema.vcs-url="git@github.com:kube-cloud/docker-ansible-test.git"
 
 # Version control system REF Label
 LABEL org.label-schema.vcs-ref=$VCS_REF
@@ -42,43 +42,41 @@ LABEL org.label-schema.vcs-ref=$VCS_REF
 # Label Schema Label
 LABEL org.label-schema.schema-version="1.0.0-rc.1"
 
-# Official CentOS 7 image extension - systemd usage recommendations : See https://hub.docker.com/_/centos/
-RUN yum -y update; yum clean all; \
-(cd /lib/systemd/system/sysinit.target.wants/; for i in *; do [ $i == systemd-tmpfiles-setup.service ] || rm -f $i; done); \
-rm -f /lib/systemd/system/multi-user.target.wants/*;\
-rm -f /etc/systemd/system/*.wants/*;\
-rm -f /lib/systemd/system/local-fs.target.wants/*; \
-rm -f /lib/systemd/system/sockets.target.wants/*udev*; \
-rm -f /lib/systemd/system/sockets.target.wants/*initctl*; \
-rm -f /lib/systemd/system/basic.target.wants/*;\
-rm -f /lib/systemd/system/anaconda.target.wants/*;
-
 # Install requirements tools.
-RUN	yum makecache fast && \
+RUN	apt-get update && \
 	
-	# Used for accelerate package install and update by downloading delta instead if all package
-	yum -y install deltarpm && \
+	# Install Pip 2
+	apt-get install -y python-pip && \
 	
-	# Used to make available pip package
-	yum -y install epel-release && \
+	# Install Pip 3
+	apt-get install -y python-pip3 && \
 	
-	# used to initialize many part of OS (boot, network interfaces, etc...)
-	yum -y install initscripts && \
+	# Install wget
+	apt-get install -y  wget && \
 	
-	# Update system
-	yum -y update && \
+	# Install syslog
+	apt-get install -y rsyslog && \
 	
-	# Install sudo command
-	yum -y install sudo && \
+	# Install systemd
+	apt-get install -y  systemd && \
 	
-	## Install pip framework
-	yum -y install python-pip && \
+	# Install systemd cron
+	apt-get install -y systemd-cron && \
 	
-	# Install pip developer tools
-	yum -y install python-devel && \
+	# Install sudo
+	apt-get install -y sudo && \
 	
-	# Clean all unused repos and packages
-	yum clean all
+	# Install iproute 2
+	apt-get install -y iproute2 && \
+	
+	# Clean apt list
+	rm -Rf /var/lib/apt/lists/* && \
+	
+	# Remove Share and manuals
+	rm -Rf /usr/share/doc && rm -Rf /usr/share/man && \
+	
+	# Clean apt
+	apt-get clean
 	
 # Upgrade pip
 RUN pip install --upgrade pip
@@ -87,7 +85,7 @@ RUN pip install --upgrade pip
 RUN	pip install $pip_packages
 
 # Disable requiretty in sudoer file to permit sudo usage in script, cron or other things than terinal
-RUN	sed -i -e 's/^Defaults\s*requiretty/Defaults !requiretty/'  /etc/sudoers
+RUN	sed -i 's/^\($ModLoad imklog\)/#\1/' /etc/rsyslog.conf
 
 # Create ansible host dir
 RUN mkdir -p /etc/ansible
@@ -95,8 +93,8 @@ RUN mkdir -p /etc/ansible
 # Configure ansible Local host connexion
 RUN echo -e '[local]\nlocalhost ansible_connection=local' > /etc/ansible/hosts
 
-# Official CentOS 7 image extension recommendation
-VOLUME ["/sys/fs/cgroup"]
+# Declare volume for binding
+VOLUME ["/sys/fs/cgroup", "/tmp", "/run"]
 
 # Container start comand
 CMD ["/usr/lib/systemd/systemd"]
