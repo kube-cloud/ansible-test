@@ -2,6 +2,7 @@
 
 ![Docker Automated build](https://img.shields.io/docker/automated/kubecloudsas/docker-ansible-test.svg?style=flat)
 ![Docker Cloud Build Status](https://img.shields.io/docker/cloud/build/kubecloudsas/docker-ansible-test.svg?style=flat)
+![Travis Build](https://img.shields.io/travis/kube-cloud/docker-ansible-test.svg?style=flat)
 
 CentOS/Ubuntu official docker container extension, to test ansible playbooks and roles.
 
