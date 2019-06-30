@@ -81,6 +81,9 @@ RUN	apt-get update && \
 # Upgrade pip
 RUN pip install --upgrade pip
 
+# Upgrade cryptography
+RUN pip install --upgrade cryptography
+
 # Install pip packages
 RUN	pip install $pip_packages
 
@@ -96,5 +99,5 @@ RUN echo -e '[local]\nlocalhost ansible_connection=local' > /etc/ansible/hosts
 # Declare volume for binding
 VOLUME ["/sys/fs/cgroup", "/tmp", "/run"]
 
-# Container start comand
-CMD ["/usr/lib/systemd/systemd"]
+# Container start command
+CMD ["/lib/systemd/systemd"]
