@@ -1,6 +1,6 @@
 # Ansible Test
 
-![Docker Automated build](https://img.shields.io/docker/automated/kubecloudsas/docker-ansible-test.svg?style=flat)
+![Docker Automated build](https://img.shields.io/docker/cloud/automated/kubecloudsas/docker-ansible-test.svg?style=flat)
 ![Docker Cloud Build Status](https://img.shields.io/docker/cloud/build/kubecloudsas/docker-ansible-test.svg?style=flat)
 ![Travis Build](https://img.shields.io/travis/kube-cloud/docker-ansible-test.svg?style=flat)
 
