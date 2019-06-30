@@ -19,7 +19,7 @@ ARG BUILD_DATE
 ARG VCS_REF
 
 # Pip package to be installed
-ENV pip_packages "ansible"
+ENV pip_packages "ansible molecule flake8 testinfra ansible-lint"
 
 # Name Label
 LABEL org.label-schema.name = "ansible-test"
@@ -59,6 +59,9 @@ RUN	yum makecache fast && \
 	# Used for accelerate package install and update by downloading delta instead if all package
 	yum -y install deltarpm && \
 	
+	# Used by pip to install some packages
+	yum -y install gcc && \
+	
 	# Used to make available pip package
 	yum -y install epel-release && \
 	
@@ -71,7 +74,7 @@ RUN	yum makecache fast && \
 	# Install sudo command
 	yum -y install sudo && \
 	
-	## Install pip framework
+	# Install pip framework
 	yum -y install python-pip && \
 	
 	# Install pip developer tools
