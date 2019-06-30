@@ -19,7 +19,7 @@ ARG BUILD_DATE
 ARG VCS_REF
 
 # Pip package to be installed
-ENV pip_packages "ansible pyopenssl"
+ENV pip_packages "ansible pyopenssl  molecule flake8 testinfra ansible-lint"
 
 # Name Label
 LABEL org.label-schema.name = "ansible-test"

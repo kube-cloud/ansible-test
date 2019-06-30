@@ -22,3 +22,12 @@ script:
 
   # Verify Ansible is available in the container.
   - docker exec --tty test-docker-ansible-container env TERM=xterm ansible --version
+
+  # Verify Molecule is available in the container.
+  - docker exec --tty test-docker-ansible-container env TERM=xterm molecule --version
+
+  # Verify Flake8 is available in the container.
+  - docker exec --tty test-docker-ansible-container env TERM=xterm flake8 --version
+
+  # Verify Ansible Lint is available in the container.
+  - docker exec --tty test-docker-ansible-container env TERM=xterm ansible-lint --version
