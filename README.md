@@ -4,7 +4,7 @@
 ![Docker Cloud Build Status](https://img.shields.io/docker/cloud/build/kubecloudsas/docker-ansible-test.svg?style=flat)
 ![Travis Build](https://img.shields.io/travis/kube-cloud/docker-ansible-test.svg?style=flat)
 
-CentOS/Ubuntu official docker container extension, to test ansible playbooks and roles.
+Ubuntu official docker container extension, to test ansible playbooks and roles.
 
 [![](https://kube-cloud.com/images/branding/logo/kubecloud-logo-single_writing_horizontal_color_300x112px.png)](https://www.kube-cloud.com/)
 <img width="200" src="https://getvectorlogo.com/wp-content/uploads/2019/01/red-hat-ansible-vector-logo.png">  
