@@ -1,4 +1,3 @@
-
 # Ansible Test
 
 ![Docker Automated build](https://img.shields.io/docker/automated/kubecloudsas/docker-ansible-test.svg?style=flat)
