@@ -6,8 +6,8 @@
 # git@github.com:kube-cloud/docker-ansible-test.git
 #
 
-# Pull base image.
-FROM ubuntu:18.04
+# Pull base image (Ubuntu Xenial Xerxus).
+FROM ubuntu:16.04
 
 # Maintainer
 LABEL maintainer="Jean-Jacques ETUNÈ NGI<jetune@kube-cloud.com>"
@@ -28,7 +28,7 @@ LABEL org.label-schema.name = "ansible-test"
 LABEL org.label-schema.description = "Ubuntu based Docker container image for Ansible Playbook and Role Testing."
 
 # RUL Label
-LABEL org.label-schema.url="https://github.com/kube-cloud/docker-ansible-test/tree/ubuntu18"
+LABEL org.label-schema.url="https://github.com/kube-cloud/docker-ansible-test/tree/ubuntu16"
 
 # RUL Label
 LABEL org.label-schema.build-date=$BUILD_DATE
