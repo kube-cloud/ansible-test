@@ -7,7 +7,7 @@
 #
 
 # Pull base image.
-FROM centos:7
+FROM centos:6
 
 # Maintainer
 LABEL maintainer="Jean-Jacques ETUNÈ NGI<jetune@kube-cloud.com>"
