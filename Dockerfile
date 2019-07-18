@@ -42,17 +42,6 @@ LABEL org.label-schema.vcs-ref=$VCS_REF
 # Label Schema Label
 LABEL org.label-schema.schema-version="1.0.0-rc.1"
 
-# Official CentOS 7 image extension - systemd usage recommendations : See https://hub.docker.com/_/centos/
-RUN yum -y update; yum clean all; \
-(cd /lib/systemd/system/sysinit.target.wants/; for i in *; do [ $i == systemd-tmpfiles-setup.service ] || rm -f $i; done); \
-rm -f /lib/systemd/system/multi-user.target.wants/*;\
-rm -f /etc/systemd/system/*.wants/*;\
-rm -f /lib/systemd/system/local-fs.target.wants/*; \
-rm -f /lib/systemd/system/sockets.target.wants/*udev*; \
-rm -f /lib/systemd/system/sockets.target.wants/*initctl*; \
-rm -f /lib/systemd/system/basic.target.wants/*;\
-rm -f /lib/systemd/system/anaconda.target.wants/*;
-
 # Install requirements tools.
 RUN	yum makecache fast && \
 	
@@ -63,31 +52,27 @@ RUN	yum makecache fast && \
 	yum -y install gcc && \
 	
 	# Used to make available pip package
-	yum -y install epel-release && \
+	yum -y install epel-release centos-release-scl && \
 	
 	# used to initialize many part of OS (boot, network interfaces, etc...)
 	yum -y install initscripts && \
 	
 	# Update system
-	yum -y update && \
+	yum -y update
 	
-	# Install sudo command
-	yum -y install sudo && \
+# Install sudo
+RUN	yum -y install sudo
 	
-	# Install pip framework
-	yum -y install python-pip && \
+# Install python27 framework
+RUN	yum -y install python27
 	
-	# Install pip developer tools
-	yum -y install python-devel && \
-	
-	# Clean all unused repos and packages
-	yum clean all
-	
-# Upgrade pip
-RUN pip install --upgrade pip
+# Clean all unused repos and packages
+RUN	yum clean all
 
 # Install pip packages
-RUN	pip install $pip_packages
+RUN	scl enable python27 bash
+
+RUN source /opt/rh/python27/enable && echo $(python -V)
 
 # Disable requiretty in sudoer file to permit sudo usage in script, cron or other things than terinal
 RUN	sed -i -e 's/^Defaults\s*requiretty/Defaults !requiretty/'  /etc/sudoers
