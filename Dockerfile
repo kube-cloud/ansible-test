@@ -80,6 +80,12 @@ RUN	yum makecache fast && \
 	# Install pip developer tools
 	yum -y install python-devel && \
 	
+	# Install Zip
+	yum -y install zip && \
+	
+	# Install Unzip
+	yum -y install unzip && \
+	
 	# Clean all unused repos and packages
 	yum clean all
 	
