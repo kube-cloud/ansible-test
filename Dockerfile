@@ -69,6 +69,12 @@ RUN	apt-get update && \
 	# Install iproute 2
 	apt-get install -y iproute2 && \
 	
+	# Install Zip
+	apt-get install -y zip && \
+	
+	# Install Unzip
+	apt-get install -y unzip && \
+	
 	# Clean apt list
 	rm -Rf /var/lib/apt/lists/* && \
 	
