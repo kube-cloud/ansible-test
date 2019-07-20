@@ -125,5 +125,8 @@ RUN echo -e '[local]\nlocalhost ansible_connection=local' > /etc/ansible/hosts
 # Official CentOS 7 image extension recommendation
 VOLUME ["/sys/fs/cgroup"]
 
+# Set Locale
+ENV LC_CTYPE=en_US.UTF-8
+
 # Container start comand
 CMD ["tail", "-f", "/dev/null"]
