@@ -98,14 +98,14 @@ RUN	yum makecache fast && \
 
 # Download python
 RUN mkdir -p ${PY_DOWNLOADED_DIR} && \
-	wget ${PY_URL} -O ${PY_DOWNLOADED_DIR}/${PY_DIR_FILENAME}.tgz && \
-	wget ${PIP_URL} -O ${PY_DOWNLOADED_DIR}/${PIP_FILE_NAME}
+	wget -q ${PY_URL} -O ${PY_DOWNLOADED_DIR}/${PY_DIR_FILENAME}.tgz && \
+	wget -q ${PIP_URL} -O ${PY_DOWNLOADED_DIR}/${PIP_FILE_NAME}
 
 # Uncompress Python 3.6
 RUN	tar xzf ${PY_DOWNLOADED_DIR}/${PY_DIR_FILENAME}.tgz -C ${PY_DOWNLOADED_DIR}
 	
 # Install python27 framework
-RUN	cd ${PY_DOWNLOADED_DIR}/${PY_DIR_FILENAME} && ./configure --enable-optimizations && make altinstall
+RUN	cd ${PY_DOWNLOADED_DIR}/${PY_DIR_FILENAME} && ./configure --enable-optimizations >> /dev/null && make --quiet altinstall >> /dev/null
 
 # nIstall pip
 RUN /usr/local/bin/python3.6 ${PY_DOWNLOADED_DIR}/${PIP_FILE_NAME}
