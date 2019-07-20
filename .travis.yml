@@ -15,10 +15,10 @@ before_install:
 script:
   
   # Test building Dockerfile.
-  - docker build -t kube-cloud/docker-ansible-test:ubuntu18 .
+  - docker build -t kube-cloud/docker-ansible-test:ubuntu16 .
 
   # Test running the container.
-  - docker run --name test-docker-ansible-container -d --rm --privileged -v /sys/fs/cgroup:/sys/fs/cgroup:ro kube-cloud/docker-ansible-test:ubuntu18
+  - docker run --name test-docker-ansible-container -d --rm --privileged -v /sys/fs/cgroup:/sys/fs/cgroup:ro kube-cloud/docker-ansible-test:ubuntu16
 
   # Verify Ansible is available in the container.
   - docker exec --tty test-docker-ansible-container env TERM=xterm ansible --version
