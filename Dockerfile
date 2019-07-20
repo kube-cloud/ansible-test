@@ -126,4 +126,4 @@ RUN echo -e '[local]\nlocalhost ansible_connection=local' > /etc/ansible/hosts
 VOLUME ["/sys/fs/cgroup"]
 
 # Container start comand
-CMD ["/usr/lib/systemd/systemd"]
+CMD ["tail", "-f", "/dev/null"]
