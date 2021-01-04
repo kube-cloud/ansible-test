@@ -44,54 +44,51 @@ LABEL org.label-schema.schema-version="1.0.0-rc.1"
 
 # Install requirements tools.
 RUN	apt-get update && \
-	
-	# Install Pip 2
-	apt-get install -y python-pip && \
-	
+
 	# Install Pip for python 3
 	apt-get install -y python3-pip && \
-	
+
 	# Install wget
 	apt-get install -y  wget && \
-	
+
 	# Install syslog
 	apt-get install -y rsyslog && \
-	
+
 	# Install systemd
 	apt-get install -y  systemd && \
-	
+
 	# Install systemd cron
 	apt-get install -y systemd-cron && \
-	
+
 	# Install sudo
 	apt-get install -y sudo && \
-	
+
 	# Install iproute 2
 	apt-get install -y iproute2 && \
-	
+
 	# Install Zip
 	apt-get install -y zip && \
-	
+
 	# Install Unzip
 	apt-get install -y unzip && \
-	
+
 	# Clean apt list
 	rm -Rf /var/lib/apt/lists/* && \
-	
+
 	# Remove Share and manuals
 	rm -Rf /usr/share/doc && rm -Rf /usr/share/man && \
-	
+
 	# Clean apt
 	apt-get clean
-	
+
 # Upgrade pip
-RUN pip install --upgrade pip
+RUN pip3 install --upgrade pip
 
 # Upgrade cryptography
-RUN pip install --upgrade cryptography
+RUN pip3 install --upgrade cryptography
 
 # Install pip packages
-RUN	pip install $pip_packages
+RUN	pip3 install $pip_packages
 
 # Disable requiretty in sudoer file to permit sudo usage in script, cron or other things than terinal
 RUN	sed -i 's/^\($ModLoad imklog\)/#\1/' /etc/rsyslog.conf
