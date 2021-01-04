@@ -122,6 +122,12 @@ RUN mkdir -p /etc/ansible
 # Configure ansible Local host connexion
 RUN echo -e '[local]\nlocalhost ansible_connection=local' > /etc/ansible/hosts
 
+# Export LC
+ENV LC_ALL=en_US.utf-8
+
+# Export LANG
+ENV LANG=en_US.utf-8
+
 # Official CentOS 7 image extension recommendation
 VOLUME ["/sys/fs/cgroup"]
 
