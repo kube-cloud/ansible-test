@@ -72,6 +72,9 @@ RUN	apt-get update && \
 	# Install Unzip
 	apt-get install -y unzip && \
 
+	# Install Locales
+	apt-get install -y locales && \
+
 	# Clean apt list
 	rm -Rf /var/lib/apt/lists/* && \
 
@@ -80,6 +83,12 @@ RUN	apt-get update && \
 
 	# Clean apt
 	apt-get clean
+
+# Export ENV LC
+ENV LC_ALL=C.UTF-8
+
+# Export LANG
+ENV LANG=C.UTF-8
 
 # Upgrade pip
 RUN pip3 install --upgrade pip
