@@ -54,76 +54,64 @@ RUN yum -y update; yum clean all; \
 	rm -f /lib/systemd/system/anaconda.target.wants/*;
 
 # Install requirements tools.
-RUN	yum makecache fast && \
+RUN	yum makecache fast
 
-	# Used for accelerate package install and update by downloading delta instead if all package
-	yum -y install deltarpm && \
+# Used for accelerate package install and update by downloading delta instead if all package
+RUN	yum -y install deltarpm
 
-	# Used by pip to install some packages
-	yum -y install gcc && \
+# Used by pip to install some packages
+RUN	yum -y install gcc
 
-	# Used to make available pip package
-	yum -y install epel-release && \
+# Used to make available pip package
+RUN	yum -y install epel-release
 
-	# used to initialize many part of OS (boot, network interfaces, etc...)
-	yum -y install initscripts && \
+# used to initialize many part of OS (boot, network interfaces, etc...)
+RUN	yum -y install initscripts
 
-	# Update system
-	yum -y update && \
+# Update system
+RUN	yum -y update
 
-	# Install sudo command
-	yum -y install sudo && \
+# Install sudo command
+RUN	yum -y install sudo
 
-	# Install yum utils
-	yum -y install yum-utils && \
+# Install yum utils
+RUN	yum -y install yum-utils
 
-	# Install IUS Comminuty
-	yum -y install https://centos7.iuscommunity.org/ius-release.rpm && \
+# Install IUS Comminuty
+RUN	yum -y install https://repo.ius.io/7/x86_64/packages/i/ius-release-2-1.el7.ius.noarch.rpm
 
-	# Install Python 3.6
-	yum -y install python36u && \
+# Install Python 3.6
+RUN	yum -y install python36u
 
-	# Install pip framework
-	yum -y install python36u-pip && \
+# Install pip framework
+RUN	yum -y install python36u-pip
 
-	# Install python developer tools
-	yum -y install python36u-devel && \
+# Install python developer tools
+RUN	yum -y install python36u-devel
 
-	# Install python developper libs
-	yum -y install ppython36u-libs && \
+# Install python developper libs
+RUN	yum -y install python36u-libs
 
-	# Install Zip
-	yum -y install zip && \
+# Install Zip
+RUN	yum -y install zip
 
-	# Install Unzip
-	yum -y install unzip && \
+# Install Unzip
+RUN	yum -y install unzip
 
-	# Clean all unused repos and packages
-	yum clean all
-
-# Export ENV LC
-ENV LC_ALL=C.UTF-8
-
-# Export LANG
-ENV LANG=C.UTF-8
+# Clean all unused repos and packages
+RUN	yum clean all
 
 # Install python Link
-RUN ln -s /usr/bin/python3.6 /usr/bin/python
-
-# Install python Link
-RUN ln -s /usr/bin/python3.6 /usr/bin/python3
-
-# Install PIP 3 Link
-RUN ln -s /usr/bin/pip3.6 /usr/bin/pip
-
-# Install PIP 3 Link
-RUN ln -s /usr/bin/pip3.6 /usr/bin/pip3
+RUN ln -s /usr/bin/python3.6 /usr/bin/python36
 
 # Upgrade pip
-RUN pip install --upgrade pip
+RUN pip3 install --upgrade pip
+
+# Install pip wheel
+RUN	pip3 install wheel
 
 # Install pip packages
-RUN	pip install $pip_packages
+RUN	pip3 install $pip_packages
 
 # Disable requiretty in sudoer file to permit sudo usage in script, cron or other things than terinal
 RUN	sed -i -e 's/^Defaults\s*requiretty/Defaults !requiretty/'  /etc/sudoers
