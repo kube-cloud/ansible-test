@@ -66,6 +66,9 @@ RUN	apt-get update && \
 	# Install iproute 2
 	apt-get install -y iproute2 && \
 
+	# Install Locales
+	apt-get install -y locales && \
+
 	# Install Zip
 	apt-get install -y zip && \
 
@@ -80,6 +83,12 @@ RUN	apt-get update && \
 
 	# Clean apt
 	apt-get clean
+
+# Export ENV LC
+ENV LC_ALL=C.UTF-8
+
+# Export LANG
+ENV LANG=C.UTF-8
 
 # Upgrade pip
 RUN pip3 install --upgrade pip
