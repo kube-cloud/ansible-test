@@ -7,7 +7,7 @@
 #
 
 # Pull base image.
-FROM centos:7
+FROM centos/python-36-centos7:1
 
 # Maintainer
 LABEL maintainer="Jean-Jacques ETUNÈ NGI<jetune@kube-cloud.com>"
@@ -44,51 +44,57 @@ LABEL org.label-schema.schema-version="1.0.0-rc.1"
 
 # Official CentOS 7 image extension - systemd usage recommendations : See https://hub.docker.com/_/centos/
 RUN yum -y update; yum clean all; \
-(cd /lib/systemd/system/sysinit.target.wants/; for i in *; do [ $i == systemd-tmpfiles-setup.service ] || rm -f $i; done); \
-rm -f /lib/systemd/system/multi-user.target.wants/*;\
-rm -f /etc/systemd/system/*.wants/*;\
-rm -f /lib/systemd/system/local-fs.target.wants/*; \
-rm -f /lib/systemd/system/sockets.target.wants/*udev*; \
-rm -f /lib/systemd/system/sockets.target.wants/*initctl*; \
-rm -f /lib/systemd/system/basic.target.wants/*;\
-rm -f /lib/systemd/system/anaconda.target.wants/*;
+	(cd /lib/systemd/system/sysinit.target.wants/; for i in *; do [ $i == systemd-tmpfiles-setup.service ] || rm -f $i; done); \
+	rm -f /lib/systemd/system/multi-user.target.wants/*;\
+	rm -f /etc/systemd/system/*.wants/*;\
+	rm -f /lib/systemd/system/local-fs.target.wants/*; \
+	rm -f /lib/systemd/system/sockets.target.wants/*udev*; \
+	rm -f /lib/systemd/system/sockets.target.wants/*initctl*; \
+	rm -f /lib/systemd/system/basic.target.wants/*;\
+	rm -f /lib/systemd/system/anaconda.target.wants/*;
 
 # Install requirements tools.
 RUN	yum makecache fast && \
-	
+
 	# Used for accelerate package install and update by downloading delta instead if all package
 	yum -y install deltarpm && \
-	
+
 	# Used by pip to install some packages
 	yum -y install gcc && \
-	
+
 	# Used to make available pip package
 	yum -y install epel-release && \
-	
+
 	# used to initialize many part of OS (boot, network interfaces, etc...)
 	yum -y install initscripts && \
-	
+
 	# Update system
 	yum -y update && \
-	
+
 	# Install sudo command
 	yum -y install sudo && \
-	
+
 	# Install pip framework
 	yum -y install python-pip && \
-	
+
 	# Install pip developer tools
 	yum -y install python-devel && \
-	
+
 	# Install Zip
 	yum -y install zip && \
-	
+
 	# Install Unzip
 	yum -y install unzip && \
-	
+
 	# Clean all unused repos and packages
 	yum clean all
-	
+
+# Export ENV LC
+ENV LC_ALL=C.UTF-8
+
+# Export LANG
+ENV LANG=C.UTF-8
+
 # Upgrade pip
 RUN pip install --upgrade pip
 
