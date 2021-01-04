@@ -7,7 +7,7 @@
 #
 
 # Pull base image.
-FROM centos/python-36-centos7:1
+FROM centos:7
 
 # Maintainer
 LABEL maintainer="Jean-Jacques ETUNÈ NGI<jetune@kube-cloud.com>"
@@ -74,11 +74,23 @@ RUN	yum makecache fast && \
 	# Install sudo command
 	yum -y install sudo && \
 
-	# Install pip framework
-	yum -y install python-pip && \
+	# Install yum utils
+	yum -y install yum-utils && \
 
-	# Install pip developer tools
-	yum -y install python-devel && \
+	# Install IUS Comminuty
+	yum -y install https://centos7.iuscommunity.org/ius-release.rpm && \
+
+	# Install Python 3.6
+	yum -y install python36u && \
+
+	# Install pip framework
+	yum -y install python36u-pip && \
+
+	# Install python developer tools
+	yum -y install python36u-devel && \
+
+	# Install python developper libs
+	yum -y install ppython36u-libs && \
 
 	# Install Zip
 	yum -y install zip && \
@@ -94,6 +106,18 @@ ENV LC_ALL=C.UTF-8
 
 # Export LANG
 ENV LANG=C.UTF-8
+
+# Install python Link
+RUN ln -s /usr/bin/python3.6 /usr/bin/python
+
+# Install python Link
+RUN ln -s /usr/bin/python3.6 /usr/bin/python3
+
+# Install PIP 3 Link
+RUN ln -s /usr/bin/pip3.6 /usr/bin/pip
+
+# Install PIP 3 Link
+RUN ln -s /usr/bin/pip3.6 /usr/bin/pip3
 
 # Upgrade pip
 RUN pip install --upgrade pip
