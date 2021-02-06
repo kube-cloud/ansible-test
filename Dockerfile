@@ -93,6 +93,12 @@ RUN pip install --upgrade cryptography
 # Install pip packages
 RUN	pip install $pip_packages
 
+# Upgrade cryptography
+RUN pip3 install --upgrade cryptography
+
+# Install pip packages
+RUN	pip3 install $pip_packages
+
 # Disable requiretty in sudoer file to permit sudo usage in script, cron or other things than terinal
 RUN	sed -i 's/^\($ModLoad imklog\)/#\1/' /etc/rsyslog.conf
 
