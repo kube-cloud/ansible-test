@@ -19,7 +19,7 @@ ARG BUILD_DATE
 ARG VCS_REF
 
 # Pip package to be installed
-ENV pip_packages "ansible pyopenssl  molecule flake8 testinfra ansible-lint"
+ENV pip_packages "ansible pyopenssl  molecule flake8 testinfra ansible-lint pymysql"
 
 # Name Label
 LABEL org.label-schema.name = "ansible-test"
@@ -92,6 +92,12 @@ RUN pip install --upgrade cryptography
 
 # Install pip packages
 RUN	pip install $pip_packages
+
+# Upgrade cryptography
+RUN pip3 install --upgrade cryptography
+
+# Install pip packages
+RUN	pip3 install $pip_packages
 
 # Disable requiretty in sudoer file to permit sudo usage in script, cron or other things than terinal
 RUN	sed -i 's/^\($ModLoad imklog\)/#\1/' /etc/rsyslog.conf
